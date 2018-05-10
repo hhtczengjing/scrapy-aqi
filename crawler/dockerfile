@@ -1,0 +1,18 @@
+FROM ubuntu
+MAINTAINER hhtczengjing@gmail.com
+RUN apt-get update \
+	&& apt-get -y dist-upgrade \
+	&& apt-get install -y openssh-server  \
+	&& apt-get install -y python2.7-dev python-pip  \
+	&& apt-get install -y zlib1g-dev libffi-dev libssl-dev  \
+	&& apt-get install -y libxml2-dev libxslt1-dev  \
+	&& apt-get install -y libmysqlclient-dev \ 
+	&& pip install setuptools  \
+	&& pip install Scrapy \
+	&& pip install MySQL \ 
+	&& apt-get clean      \
+ 	&& apt-get autoclean  \
+ 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+COPY . /data
+WORKDIR /data
+CMD ["scrapy", "crawl", "pm25"]
